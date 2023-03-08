@@ -10,35 +10,38 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-// Create Class AddCourse for Performed Add Course Action
+// Create Class AddCourse for Performed Add Course Action.
 class AddCourse implements ActionListener {
-	JLabel l1, l2, l3, l4, l5;
+	JLabel l1, l2, l3, l4, l5,l6;
 	JTextField t1, t2, t3, t4, t5;
-	JButton j1;
+	JButton b6;
 
 	// Create Constructor
 	AddCourse() {
 		// Set Frame Dimension, Visibility & Layout
-		JFrame fr1 = new JFrame("Add Coruse");
+		JFrame fr1 = new JFrame("Add Course");
 		fr1.setVisible(true);
 		fr1.setLayout(null);
 		fr1.setSize(1000, 700);
 
-		l1 = new JLabel("Coruse ID");
+		l1 = new JLabel("Course ID");
 		l1.setBounds(100, 100, 150, 20);
 		fr1.add(l1);
-		l2 = new JLabel("Coruse Name");
+		l2 = new JLabel("Course Name");
 		l2.setBounds(100, 130, 150, 20);
 		fr1.add(l2);
-		l3 = new JLabel("Coruse Fees");
+		l3 = new JLabel("Course Fees");
 		l3.setBounds(100, 160, 150, 20);
 		fr1.add(l3);
-		l4 = new JLabel("Coruse Duration");
+		l4 = new JLabel("Course Duration");
 		l4.setBounds(100, 190, 150, 20);
 		fr1.add(l4);
-		l5 = new JLabel("Coruse Detail");
+		l5 = new JLabel("Course Detail");
 		l5.setBounds(100, 220, 150, 20);
 		fr1.add(l5);
+		l6=new JLabel("");
+		l6.setBounds(175, 300, 200, 20);
+		fr1.add(l6);
 
 		t1 = new JTextField();
 		t1.setBounds(250, 100, 150, 20);
@@ -56,264 +59,12 @@ class AddCourse implements ActionListener {
 		t5.setBounds(250, 220, 150, 20);
 		fr1.add(t5);
 
-		j1 = new JButton("Submit");
-		j1.setBounds(175, 260, 150, 20);
-		fr1.add(j1);
+		b6 = new JButton("Submit");
+		b6.setBounds(175, 260, 150, 20);
+		fr1.add(b6);
 
 		// Make Button Clicked To EventTable
-		j1.addActionListener(this);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
-		// If User Clicked Submit Button Than Registration Action Performed.
-		if (e.getSource() == j1) {
-			System.out.println("Submit button clicked.");
-
-			// Fetch Data From User Input
-			int ID = Integer.parseInt(t1.getText());
-			String Name = t2.getText();
-			int Fees = Integer.parseInt(t3.getText());
-			String Duration = t4.getText();
-			String Detail = t5.getText();
-
-			try {
-				// Provide Connectivity : User Input Is Stored Into Database Table
-				Connection connection = Assesement.createconnection();
-				String sql = "insert into course (ID, Name, Fees, Duration, Detail) values (?,?,?,?,?)";
-				PreparedStatement pst = connection.prepareStatement(sql);
-
-				// Data Set Into Table
-				pst.setInt(1, ID);
-				pst.setString(2, Name);
-				pst.setInt(3, Fees);
-				pst.setString(4, Duration);
-				pst.setString(5, Detail);
-				pst.executeUpdate();
-
-				// If Registration Succesfully, than Print console Messege & SetText Empty.
-				System.out.println("Registration Succesfully.");
-				t1.setText("");
-				t2.setText("");
-				t3.setText("");
-				t4.setText("");
-				t5.setText("");
-
-			} catch (Exception e2) {
-				// If Exception Is Generated Than Handle by printStackTrace.
-				e2.printStackTrace();
-			}
-		}
-	}
-}
-
-//Create Class ViewCourse for Performed View all Course
-class ViewCourse implements ActionListener {
-	JLabel l1, l2, l3, l4, l5;
-	JTextField t1, t2, t3, t4, t5;
-	JButton j1;
-
-	// Create Constructor
-	ViewCourse() {
-		// Set Frame Dimension, Visibility & Layout
-		JFrame fr1 = new JFrame("Add Coruse");
-		fr1.setVisible(true);
-		fr1.setLayout(null);
-		fr1.setSize(1000, 700);
-
-		l1 = new JLabel("Coruse ID");
-		l1.setBounds(100, 100, 150, 20);
-		fr1.add(l1);
-		l2 = new JLabel("Coruse Name");
-		l2.setBounds(100, 130, 150, 20);
-		fr1.add(l2);
-		l3 = new JLabel("Coruse Fees");
-		l3.setBounds(100, 160, 150, 20);
-		fr1.add(l3);
-		l4 = new JLabel("Coruse Duration");
-		l4.setBounds(100, 190, 150, 20);
-		fr1.add(l4);
-		l5 = new JLabel("Coruse Detail");
-		l5.setBounds(100, 220, 150, 20);
-		fr1.add(l5);
-
-		t1 = new JTextField();
-		t1.setBounds(250, 100, 150, 20);
-		fr1.add(t1);
-		t2 = new JTextField();
-		t2.setBounds(250, 130, 150, 20);
-		fr1.add(t2);
-		t3 = new JTextField();
-		t3.setBounds(250, 160, 150, 20);
-		fr1.add(t3);
-		t4 = new JTextField();
-		t4.setBounds(250, 190, 150, 20);
-		fr1.add(t4);
-		t5 = new JTextField();
-		t5.setBounds(250, 220, 150, 20);
-		fr1.add(t5);
-
-		j1 = new JButton("Submit");
-		j1.setBounds(175, 260, 150, 20);
-		fr1.add(j1);
-
-		// Make Button Clicked To EventTable
-		j1.addActionListener(this);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
-		// If User Clicked Submit Button Than Registration Action Performed.
-		if (e.getSource() == j1) {
-			System.out.println("Submit button clicked.");
-
-			// Fetch Data From User Input
-			int ID = Integer.parseInt(t1.getText());
-			String Name = t2.getText();
-			int Fees = Integer.parseInt(t3.getText());
-			String Duration = t4.getText();
-			String Detail = t5.getText();
-
-			try {
-				// Provide Connectivity : User Input Is Stored Into Database Table
-				Connection connection = Assesement.createconnection();
-				String sql = "insert into course (ID, Name, Fees, Duration, Detail) values (?,?,?,?,?)";
-				PreparedStatement pst = connection.prepareStatement(sql);
-
-				// Data Set Into Table
-				pst.setInt(1, ID);
-				pst.setString(2, Name);
-				pst.setInt(3, Fees);
-				pst.setString(4, Duration);
-				pst.setString(5, Detail);
-				pst.executeUpdate();
-
-				// If Registration Succesfully, than Print console Messege & SetText Empty.
-				System.out.println("Registration Succesfully.");
-				t1.setText("");
-				t2.setText("");
-				t3.setText("");
-				t4.setText("");
-				t5.setText("");
-
-			} catch (Exception e2) {
-				// If Exception Is Generated Than Handle by printStackTrace.
-				e2.printStackTrace();
-			}
-		}
-	}
-}
-
-class FetchSearch {
-	JLabel l1, l2, l3, l4, l5;
-	JTextField t1, t2, t3, t4, t5;
-
-	FetchSearch() {
-		// Set Frame Dimension, Visibility & Layout
-		JFrame fr1 = new JFrame(" Coruse");
-		fr1.setVisible(true);
-		fr1.setLayout(null);
-		fr1.setSize(1000, 700);
-
-		l1 = new JLabel("Coruse ID");
-		l1.setBounds(100, 100, 150, 20);
-		fr1.add(l1);
-		l2 = new JLabel("Coruse Name");
-		l2.setBounds(100, 130, 150, 20);
-		fr1.add(l2);
-		l3 = new JLabel("Coruse Fees");
-		l3.setBounds(100, 160, 150, 20);
-		fr1.add(l3);
-		l4 = new JLabel("Coruse Duration");
-		l4.setBounds(100, 190, 150, 20);
-		fr1.add(l4);
-		l5 = new JLabel("Coruse Detail");
-		l5.setBounds(100, 220, 150, 20);
-		fr1.add(l5);
-
-		t1 = new JTextField();
-		t1.setBounds(250, 100, 150, 20);
-		fr1.add(t1);
-		t2 = new JTextField();
-		t2.setBounds(250, 130, 150, 20);
-		fr1.add(t2);
-		t3 = new JTextField();
-		t3.setBounds(250, 160, 150, 20);
-		fr1.add(t3);
-		t4 = new JTextField();
-		t4.setBounds(250, 190, 150, 20);
-		fr1.add(t4);
-		t5 = new JTextField();
-		t5.setBounds(250, 220, 150, 20);
-		fr1.add(t5);
-	}
-}
-
-//Create Class SearchCourse for Performed Search Course Details
-class SearchCourse implements ActionListener {
-	JLabel l1, l2, l3, l4, l5,l6;
-	JTextField t1, t2, t3, t4, t5,t6;
-	JButton b6;
-
-	// Create Constructor
-	SearchCourse() {
-		JFrame fr = new JFrame("Registration Form");
-		fr.setVisible(true);
-		fr.setSize(1300, 730);
-		fr.setLayout(null);
-
-		l6 = new JLabel("Course ID for Search");
-		l6.setBounds(100, 100, 250, 20);
-		fr.add(l6);
-		
-		t6 = new JTextField();
-		t6.setBounds(250, 100, 150, 20);
-		fr.add(t6);
-		
-		b6=new JButton("Search");
-		b6.setBounds(150, 150, 100, 20);
-		fr.add(b6);
-		
 		b6.addActionListener(this);
-		
-		JFrame fr1 = new JFrame(" Coruse");
-		fr1.setVisible(true);
-		fr1.setLayout(null);
-		fr1.setSize(1000, 700);
-
-		l1 = new JLabel("Coruse ID");
-		l1.setBounds(100, 100, 150, 20);
-		fr1.add(l1);
-		l2 = new JLabel("Coruse Name");
-		l2.setBounds(100, 130, 150, 20);
-		fr1.add(l2);
-		l3 = new JLabel("Coruse Fees");
-		l3.setBounds(100, 160, 150, 20);
-		fr1.add(l3);
-		l4 = new JLabel("Coruse Duration");
-		l4.setBounds(100, 190, 150, 20);
-		fr1.add(l4);
-		l5 = new JLabel("Coruse Detail");
-		l5.setBounds(100, 220, 150, 20);
-		fr1.add(l5);
-
-		t1 = new JTextField();
-		t1.setBounds(250, 100, 150, 20);
-		fr1.add(t1);
-		t2 = new JTextField();
-		t2.setBounds(250, 130, 150, 20);
-		fr1.add(t2);
-		t3 = new JTextField();
-		t3.setBounds(250, 160, 150, 20);
-		fr1.add(t3);
-		t4 = new JTextField();
-		t4.setBounds(250, 190, 150, 20);
-		fr1.add(t4);
-		t5 = new JTextField();
-		t5.setBounds(250, 220, 150, 20);
-		fr1.add(t5);
 	}
 
 	@Override
@@ -321,11 +72,126 @@ class SearchCourse implements ActionListener {
 
 		// If User Clicked Submit Button Than Registration Action Performed.
 		if (e.getSource() == b6) {
+			System.out.println("Submit button clicked.");
+
+			// Fetch Data From User Input
+			int ID = Integer.parseInt(t1.getText());
+			String Name = t2.getText();
+			int Fees = Integer.parseInt(t3.getText());
+			String Duration = t4.getText();
+			String Detail = t5.getText();
+
+			try {
+				// Provide Connectivity : User Input Is Stored Into Database Table
+				Connection connection = Assesement.createconnection();
+				String sql = "insert into course (ID, Name, Fees, Duration, Detail) values (?,?,?,?,?)";
+				PreparedStatement pst = connection.prepareStatement(sql);
+
+				// Data Set Into Table
+				pst.setInt(1, ID);
+				pst.setString(2, Name);
+				pst.setInt(3, Fees);
+				pst.setString(4, Duration);
+				pst.setString(5, Detail);
+				pst.executeUpdate();
+
+				// If Registration Successfully, than Print Message & SetText Empty.
+				t1.setText("");
+				t2.setText("");
+				t3.setText("");
+				t4.setText("");
+				t5.setText("");
+				l6.setText("Registration Succesfully.");
+			} catch (Exception e2) {
+				// If Exception Is Generated Than Handle by printStackTrace.
+				e2.printStackTrace();
+			}
+		}
+	}
+}
+
+//Create Class ViewCourse for Performed View all Course.
+class ViewCourse implements ActionListener {
+
+	// Create Constructor
+	ViewCourse() {
+		// Set Frame Dimension, Visibility & Layout
+		JFrame fr1 = new JFrame("View Course");
+		fr1.setVisible(true);
+		fr1.setLayout(null);
+		fr1.setSize(1000, 700);
+
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+	}
+}
+
+//Create Class SearchCourse for Performed Search Course Details.
+class SearchCourse implements ActionListener {
+	JLabel l1, l2, l3, l4, l5, l6;
+	JTextField t1, t2, t3, t4, t5;
+	JButton b6;
+
+	// Create Constructor
+	SearchCourse() {
+		// Set Frame Dimension, Visibility & Layout
+		JFrame fr1 = new JFrame("Search Coruse");
+		fr1.setVisible(true);
+		fr1.setLayout(null);
+		fr1.setSize(1000, 700);
+
+		l1 = new JLabel("Course ID for Search");
+		l1.setBounds(100, 100, 250, 20);
+		fr1.add(l1);
+		l2 = new JLabel("");
+		l2.setBounds(100, 230, 150, 20);
+		fr1.add(l2);
+		l3 = new JLabel("");
+		l3.setBounds(100, 260, 150, 20);
+		fr1.add(l3);
+		l4 = new JLabel("");
+		l4.setBounds(100, 290, 150, 20);
+		fr1.add(l4);
+		l5 = new JLabel("");
+		l5.setBounds(100, 320, 150, 20);
+		fr1.add(l5);
+		l6 = new JLabel("");
+		l6.setBounds(210, 180, 150, 20);
+		fr1.add(l6);
+
+		t1 = new JTextField();
+		t1.setBounds(250, 100, 150, 20);
+		fr1.add(t1);
+		t2 = new JTextField();
+		fr1.add(t2);
+		t3 = new JTextField();
+		fr1.add(t3);
+		t4 = new JTextField();
+		fr1.add(t4);
+		t5 = new JTextField();
+		fr1.add(t5);
+
+		b6 = new JButton("Search");
+		b6.setBounds(200, 140, 100, 20);
+		fr1.add(b6);
+
+		b6.addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		// If User Clicked Search Button Than Search & Print all Details of Existing User.
+		if (e.getSource() == b6) {
 			System.out.println("Search button clicked.");
 
 			// Fetch Data From User Input
-			int ID = Integer.parseInt(t6.getText());
-//			new FetchSearch();
+			int ID = Integer.parseInt(t1.getText());
+
 			try {
 				// Provide Connectivity : User Input Is Stored Into Database Table
 				Connection connection = Assesement.createconnection();
@@ -335,20 +201,34 @@ class SearchCourse implements ActionListener {
 				pst.setInt(1, ID);
 				ResultSet rs = pst.executeQuery();
 
-				// If Course Id Exists, Than Fetch Data OtherWise Print Console screen Message.
+				// If Course Id Exists, Than Fetch Data OtherWise Print ID Does't Exist screen Message.
 				if (rs.next()) {
-					t1.setText(String.valueOf(rs.getInt("ID")));
+					l2.setText("Course Name");
+					l3.setText("Course Fees");
+					l4.setText("Course Duration");
+					l5.setText("Course Detail");
+					l6.setText("");
+
+					t2.setBounds(250, 230, 150, 20);
+					t3.setBounds(250, 260, 150, 20);
+					t4.setBounds(250, 290, 150, 20);
+					t5.setBounds(250, 320, 150, 20);
+
 					t2.setText(rs.getString("Name"));
 					t3.setText(String.valueOf(rs.getString("Fees")));
 					t4.setText(rs.getString("Duration"));
 					t5.setText(rs.getString("Detail"));
 				} else {
-					System.out.println("Data Not Found.");
-					t1.setText("");
-					t2.setText("");
-					t3.setText("");
-					t4.setText("");
-					t5.setText("");
+					l2.setText("");
+					l3.setText("");
+					l4.setText("");
+					l5.setText("");
+					l6.setText("ID Does't Exist.");
+					
+					t2.setBounds(0, 0, 0, 0);
+					t3.setBounds(0, 0, 0, 0);
+					t4.setBounds(0, 0, 0, 0);
+					t5.setBounds(0, 0, 0, 0);					
 				}
 
 			} catch (Exception e2) {
@@ -359,194 +239,236 @@ class SearchCourse implements ActionListener {
 	}
 }
 
-//Create Class EditCourse for Performed Add Edit course Details
+//Create Class EditCourse for Performed Edit Course Details.
 class EditCourse implements ActionListener {
-	JLabel l1, l2, l3, l4, l5;
-	JTextField t1, t2, t3, t4, t5;
-	JButton j1;
+	JLabel l1, l2, l3, l4, l5, l6, l7, l8;
+	JTextField t1, t2, t3, t4, t5, t6;
+	JButton b6,b7;
 
 	// Create Constructor
 	EditCourse() {
 		// Set Frame Dimension, Visibility & Layout
-		JFrame fr1 = new JFrame("Add Coruse");
+		JFrame fr1 = new JFrame("Edit Coruse");
 		fr1.setVisible(true);
 		fr1.setLayout(null);
 		fr1.setSize(1000, 700);
 
-		l1 = new JLabel("Coruse ID");
-		l1.setBounds(100, 100, 150, 20);
+		l1 = new JLabel("Course ID for Update");
+		l1.setBounds(100, 100, 250, 20);
 		fr1.add(l1);
-		l2 = new JLabel("Coruse Name");
-		l2.setBounds(100, 130, 150, 20);
+		l2 = new JLabel("");
+		l2.setBounds(100, 230, 150, 20);
 		fr1.add(l2);
-		l3 = new JLabel("Coruse Fees");
-		l3.setBounds(100, 160, 150, 20);
+		l3 = new JLabel("");
+		l3.setBounds(100, 260, 150, 20);
 		fr1.add(l3);
-		l4 = new JLabel("Coruse Duration");
-		l4.setBounds(100, 190, 150, 20);
+		l4 = new JLabel("");
+		l4.setBounds(100, 290, 150, 20);
 		fr1.add(l4);
-		l5 = new JLabel("Coruse Detail");
-		l5.setBounds(100, 220, 150, 20);
+		l5 = new JLabel("");
+		l5.setBounds(100, 320, 150, 20);
 		fr1.add(l5);
+		l6 = new JLabel("");
+		l6.setBounds(100, 350, 150, 20);
+		fr1.add(l6);
+		l7 = new JLabel("");
+		l7.setBounds(210, 180, 150, 20);
+		fr1.add(l7);
+		l8=new JLabel("");
+		l8.setBounds(180, 440, 200, 20);
+		fr1.add(l8);
 
 		t1 = new JTextField();
 		t1.setBounds(250, 100, 150, 20);
 		fr1.add(t1);
 		t2 = new JTextField();
-		t2.setBounds(250, 130, 150, 20);
 		fr1.add(t2);
 		t3 = new JTextField();
-		t3.setBounds(250, 160, 150, 20);
 		fr1.add(t3);
 		t4 = new JTextField();
-		t4.setBounds(250, 190, 150, 20);
 		fr1.add(t4);
 		t5 = new JTextField();
-		t5.setBounds(250, 220, 150, 20);
 		fr1.add(t5);
+		t6 = new JTextField();
+		fr1.add(t6);
 
-		j1 = new JButton("Submit");
-		j1.setBounds(175, 260, 150, 20);
-		fr1.add(j1);
+		b6 = new JButton("Search");
+		b6.setBounds(200, 140, 100, 20);
+		fr1.add(b6);
+		b7 = new JButton("Update");
+		fr1.add(b7);
 
-		// Make Button Clicked To EventTable
-		j1.addActionListener(this);
+		b6.addActionListener(this);
+		b7.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		// If User Clicked Submit Button Than Registration Action Performed.
-		if (e.getSource() == j1) {
-			System.out.println("Submit button clicked.");
+		// If User Clicked Search Button Than Search & Print all Details of Existing User.
+		if (e.getSource() == b6) {
+			System.out.println("Search button clicked.");
 
 			// Fetch Data From User Input
 			int ID = Integer.parseInt(t1.getText());
-			String Name = t2.getText();
-			int Fees = Integer.parseInt(t3.getText());
-			String Duration = t4.getText();
-			String Detail = t5.getText();
 
 			try {
 				// Provide Connectivity : User Input Is Stored Into Database Table
 				Connection connection = Assesement.createconnection();
-				String sql = "insert into course (ID, Name, Fees, Duration, Detail) values (?,?,?,?,?)";
+				String sql = "select * from course where id = ?";
 				PreparedStatement pst = connection.prepareStatement(sql);
 
-				// Data Set Into Table
 				pst.setInt(1, ID);
-				pst.setString(2, Name);
-				pst.setInt(3, Fees);
-				pst.setString(4, Duration);
-				pst.setString(5, Detail);
-				pst.executeUpdate();
+				ResultSet rs = pst.executeQuery();
 
-				// If Registration Succesfully, than Print console Messege & SetText Empty.
-				System.out.println("Registration Succesfully.");
-				t1.setText("");
+				// If Course Id Exists, Than Fetch Data OtherWise Print ID Does't Exist screen Message.
+				if (rs.next()) {
+					l2.setText("Course ID");
+					l3.setText("Course Name");
+					l4.setText("Course Fees");
+					l5.setText("Course Duration");
+					l6.setText("Course Detail");
+					l7.setText("");
+					
+					b7.setBounds(200, 400, 100, 20);
+
+					t2.setBounds(250, 230, 150, 20);
+					t3.setBounds(250, 260, 150, 20);
+					t4.setBounds(250, 290, 150, 20);
+					t5.setBounds(250, 320, 150, 20);
+					t6.setBounds(250, 350, 150, 20);
+
+					t2.setText(String.valueOf(rs.getString("ID")));
+					t3.setText(rs.getString("Name"));
+					t4.setText(String.valueOf(rs.getString("Fees")));
+					t5.setText(rs.getString("Duration"));
+					t6.setText(rs.getString("Detail"));
+				} 
+				else {
+					l2.setText("");
+					l3.setText("");
+					l4.setText("");
+					l5.setText("");
+					l6.setText("");
+					l7.setText("ID Does't Exist.");
+					l8.setText("");
+					
+					b7.setBounds(0, 0, 0, 0);
+					t2.setBounds(0, 0, 0, 0);
+					t3.setBounds(0, 0, 0, 0);
+					t4.setBounds(0, 0, 0, 0);
+					t5.setBounds(0, 0, 0, 0);	
+					t6.setBounds(0, 0, 0, 0);
+				}
+			} catch (Exception e2) {
+				// If Exception Is Generated Than Handle by printStackTrace.
+				e2.printStackTrace();
+			}
+		}
+		
+		// After Fetch Data & Than Updated by User Input.
+		else if (e.getSource()==b7) {
+			System.out.println("Update button clicked.");
+
+			// Fetch Data From User Input
+			int ID = Integer.parseInt(t2.getText());
+			String Name = t3.getText();
+			int Fees = Integer.parseInt(t4.getText());
+			String Duration = t5.getText();
+			String Detail = t6.getText();
+			
+			try {
+				// Provide Connectivity : User Input Is Stored Into Database Table
+				Connection connection = Assesement.createconnection();
+				String sql = "update course set Name=?, Fees=?, Duration=?,Detail=? where ID=?";
+				PreparedStatement pst = connection.prepareStatement(sql);
+				
+				pst.setString(1, Name);
+				pst.setInt(2, Fees);
+				pst.setString(3, Duration);
+				pst.setString(4, Detail);
+				pst.setInt(5, ID);
+				pst.executeUpdate();
+				
+				// Data Updated Than Show Message on Screen & other filed Empty.
+				l8.setText("Data Updated Succesfully.");
 				t2.setText("");
 				t3.setText("");
 				t4.setText("");
 				t5.setText("");
-
+				t6.setText("");
 			} catch (Exception e2) {
-				// If Exception Is Generated Than Handle by printStackTrace.
 				e2.printStackTrace();
 			}
 		}
 	}
 }
 
-//Create Class EditCourse for Performed Delete Specified course
-class DeleteCourse implements ActionListener {
-	JLabel l1, l2, l3, l4, l5;
-	JTextField t1, t2, t3, t4, t5;
-	JButton j1;
 
+//Create Class DeleteCourse for Performed Delete all Details
+class DeleteCourse implements ActionListener {
+	JLabel l1, l2;
+	JTextField t1;
+	JButton b6;
+
+	// Create Constructor
 	// Create Constructor
 	DeleteCourse() {
 		// Set Frame Dimension, Visibility & Layout
-		JFrame fr1 = new JFrame("Add Coruse");
+		JFrame fr1 = new JFrame("Delete Coruse");
 		fr1.setVisible(true);
 		fr1.setLayout(null);
 		fr1.setSize(1000, 700);
 
-		l1 = new JLabel("Coruse ID");
-		l1.setBounds(100, 100, 150, 20);
+		l1 = new JLabel("Course ID for Delete");
+		l1.setBounds(100, 100, 250, 20);
 		fr1.add(l1);
-		l2 = new JLabel("Coruse Name");
-		l2.setBounds(100, 130, 150, 20);
+		l2 = new JLabel("");
+		l2.setBounds(180, 190, 250, 20);
 		fr1.add(l2);
-		l3 = new JLabel("Coruse Fees");
-		l3.setBounds(100, 160, 150, 20);
-		fr1.add(l3);
-		l4 = new JLabel("Coruse Duration");
-		l4.setBounds(100, 190, 150, 20);
-		fr1.add(l4);
-		l5 = new JLabel("Coruse Detail");
-		l5.setBounds(100, 220, 150, 20);
-		fr1.add(l5);
 
 		t1 = new JTextField();
 		t1.setBounds(250, 100, 150, 20);
 		fr1.add(t1);
-		t2 = new JTextField();
-		t2.setBounds(250, 130, 150, 20);
-		fr1.add(t2);
-		t3 = new JTextField();
-		t3.setBounds(250, 160, 150, 20);
-		fr1.add(t3);
-		t4 = new JTextField();
-		t4.setBounds(250, 190, 150, 20);
-		fr1.add(t4);
-		t5 = new JTextField();
-		t5.setBounds(250, 220, 150, 20);
-		fr1.add(t5);
 
-		j1 = new JButton("Submit");
-		j1.setBounds(175, 260, 150, 20);
-		fr1.add(j1);
+		b6 = new JButton("DELETE");
+		b6.setBounds(200, 140, 100, 20);
+		fr1.add(b6);
 
-		// Make Button Clicked To EventTable
-		j1.addActionListener(this);
+		b6.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		// If User Clicked Submit Button Than Registration Action Performed.
-		if (e.getSource() == j1) {
-			System.out.println("Submit button clicked.");
+		// If User Clicked Delete Button Than Delete all Details of Existing User.
+		if (e.getSource() == b6) {
+			System.out.println("Delete button clicked.");
 
 			// Fetch Data From User Input
 			int ID = Integer.parseInt(t1.getText());
-			String Name = t2.getText();
-			int Fees = Integer.parseInt(t3.getText());
-			String Duration = t4.getText();
-			String Detail = t5.getText();
 
 			try {
 				// Provide Connectivity : User Input Is Stored Into Database Table
 				Connection connection = Assesement.createconnection();
-				String sql = "insert into course (ID, Name, Fees, Duration, Detail) values (?,?,?,?,?)";
+				String sql = "delete from course where id = ?";
 				PreparedStatement pst = connection.prepareStatement(sql);
 
-				// Data Set Into Table
 				pst.setInt(1, ID);
-				pst.setString(2, Name);
-				pst.setInt(3, Fees);
-				pst.setString(4, Duration);
-				pst.setString(5, Detail);
 				pst.executeUpdate();
-
-				// If Registration Succesfully, than Print console Messege & SetText Empty.
-				System.out.println("Registration Succesfully.");
+				
 				t1.setText("");
-				t2.setText("");
-				t3.setText("");
-				t4.setText("");
-				t5.setText("");
-
+				l2.setText("Data Deleted Succesfully.");
+				
+				/*
+				ResultSet rs = pst.executeUpdate();
+				if (rs.next()) {
+					t1.setText("");
+					l2.setText("Data Deleted Successfully.");
+				} else {
+					l2.setText("Course ID Doesn't Exits.");
+				}
+				*/
 			} catch (Exception e2) {
 				// If Exception Is Generated Than Handle by printStackTrace.
 				e2.printStackTrace();
@@ -554,6 +476,7 @@ class DeleteCourse implements ActionListener {
 		}
 	}
 }
+
 
 public class Assesement implements ActionListener {
 
@@ -656,7 +579,7 @@ public class Assesement implements ActionListener {
 		}
 
 		// If User clicked DeleteCourse Button Than Delete Specified Course.
-		else if (e.getSource() == b4) {
+		else if (e.getSource() == b5) {
 			System.out.println("Delete Course Button Clicked. ");
 			try {
 				// Create Object & Called Method DeleteCourse
