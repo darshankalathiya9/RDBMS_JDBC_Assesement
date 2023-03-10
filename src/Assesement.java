@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 
 // Create Class AddCourse for Performed Add Course Action.
 class AddCourse implements ActionListener {
-	JLabel l1, l2, l3, l4, l5,l6;
+	JLabel l1, l2, l3, l4, l5, l6;
 	JTextField t1, t2, t3, t4, t5;
 	JButton b6;
 
@@ -39,7 +39,7 @@ class AddCourse implements ActionListener {
 		l5 = new JLabel("Course Detail");
 		l5.setBounds(100, 220, 150, 20);
 		fr1.add(l5);
-		l6=new JLabel("");
+		l6 = new JLabel("");
 		l6.setBounds(175, 300, 200, 20);
 		fr1.add(l6);
 
@@ -110,8 +110,11 @@ class AddCourse implements ActionListener {
 	}
 }
 
-//Create Class ViewCourse for Performed View all Course.
+//Create Class ViewCourse for Performed View all Course on Console Screen.
 class ViewCourse implements ActionListener {
+
+	JLabel l1;
+	JButton b1;
 
 	// Create Constructor
 	ViewCourse() {
@@ -121,12 +124,36 @@ class ViewCourse implements ActionListener {
 		fr1.setLayout(null);
 		fr1.setSize(1000, 700);
 
+		l1 = new JLabel("Click on Below Button to See All Course are Printed on Your Console Screen");
+		l1.setBounds(100, 100, 500, 20);
+		fr1.add(l1);
+
+		b1 = new JButton("View Console Screen");
+		b1.setBounds(200, 140, 200, 20);
+		fr1.add(b1);
 		
+		b1.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == b1) {
+//			System.out.println("View Console Screen Button Clicked.");
+			try {				
+				Connection connection = Assesement.createconnection();
+				String sql = "select Name from course";
+				PreparedStatement pst = connection.prepareStatement(sql);
 
+				ResultSet rs = pst.executeQuery();
+			// Fetch Data from Table and Print all Courses on your Console Screen.
+				while(rs.next()) {
+					String Name = rs.getString("Name");
+					System.out.println(Name);
+				}
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
 	}
 }
 
@@ -218,19 +245,19 @@ class SearchCourse implements ActionListener {
 					t3.setText(String.valueOf(rs.getString("Fees")));
 					t4.setText(rs.getString("Duration"));
 					t5.setText(rs.getString("Detail"));
-				} else {
+				} 
+				else {
 					l2.setText("");
 					l3.setText("");
 					l4.setText("");
 					l5.setText("");
 					l6.setText("ID Does't Exist.");
-					
+
 					t2.setBounds(0, 0, 0, 0);
 					t3.setBounds(0, 0, 0, 0);
 					t4.setBounds(0, 0, 0, 0);
-					t5.setBounds(0, 0, 0, 0);					
+					t5.setBounds(0, 0, 0, 0);
 				}
-
 			} catch (Exception e2) {
 				// If Exception Is Generated Than Handle by printStackTrace.
 				e2.printStackTrace();
@@ -243,7 +270,7 @@ class SearchCourse implements ActionListener {
 class EditCourse implements ActionListener {
 	JLabel l1, l2, l3, l4, l5, l6, l7, l8;
 	JTextField t1, t2, t3, t4, t5, t6;
-	JButton b6,b7;
+	JButton b6, b7;
 
 	// Create Constructor
 	EditCourse() {
@@ -274,7 +301,7 @@ class EditCourse implements ActionListener {
 		l7 = new JLabel("");
 		l7.setBounds(210, 180, 150, 20);
 		fr1.add(l7);
-		l8=new JLabel("");
+		l8 = new JLabel("");
 		l8.setBounds(180, 440, 200, 20);
 		fr1.add(l8);
 
@@ -324,12 +351,13 @@ class EditCourse implements ActionListener {
 				// If Course Id Exists, Than Fetch Data OtherWise Print ID Does't Exist screen Message.
 				if (rs.next()) {
 					l2.setText("Course ID");
+					l2.disable();
 					l3.setText("Course Name");
 					l4.setText("Course Fees");
 					l5.setText("Course Duration");
 					l6.setText("Course Detail");
 					l7.setText("");
-					
+
 					b7.setBounds(200, 400, 100, 20);
 
 					t2.setBounds(250, 230, 150, 20);
@@ -339,12 +367,12 @@ class EditCourse implements ActionListener {
 					t6.setBounds(250, 350, 150, 20);
 
 					t2.setText(String.valueOf(rs.getString("ID")));
+					t2.disable();
 					t3.setText(rs.getString("Name"));
 					t4.setText(String.valueOf(rs.getString("Fees")));
 					t5.setText(rs.getString("Duration"));
 					t6.setText(rs.getString("Detail"));
-				} 
-				else {
+				} else {
 					l2.setText("");
 					l3.setText("");
 					l4.setText("");
@@ -352,12 +380,12 @@ class EditCourse implements ActionListener {
 					l6.setText("");
 					l7.setText("ID Does't Exist.");
 					l8.setText("");
-					
+
 					b7.setBounds(0, 0, 0, 0);
 					t2.setBounds(0, 0, 0, 0);
 					t3.setBounds(0, 0, 0, 0);
 					t4.setBounds(0, 0, 0, 0);
-					t5.setBounds(0, 0, 0, 0);	
+					t5.setBounds(0, 0, 0, 0);
 					t6.setBounds(0, 0, 0, 0);
 				}
 			} catch (Exception e2) {
@@ -365,9 +393,9 @@ class EditCourse implements ActionListener {
 				e2.printStackTrace();
 			}
 		}
-		
+
 		// After Fetch Data & Than Updated by User Input.
-		else if (e.getSource()==b7) {
+		else if (e.getSource() == b7) {
 			System.out.println("Update button clicked.");
 
 			// Fetch Data From User Input
@@ -376,20 +404,20 @@ class EditCourse implements ActionListener {
 			int Fees = Integer.parseInt(t4.getText());
 			String Duration = t5.getText();
 			String Detail = t6.getText();
-			
+
 			try {
 				// Provide Connectivity : User Input Is Stored Into Database Table
 				Connection connection = Assesement.createconnection();
 				String sql = "update course set Name=?, Fees=?, Duration=?,Detail=? where ID=?";
 				PreparedStatement pst = connection.prepareStatement(sql);
-				
+
 				pst.setString(1, Name);
 				pst.setInt(2, Fees);
 				pst.setString(3, Duration);
 				pst.setString(4, Detail);
 				pst.setInt(5, ID);
 				pst.executeUpdate();
-				
+
 				// Data Updated Than Show Message on Screen & other filed Empty.
 				l8.setText("Data Updated Succesfully.");
 				t2.setText("");
@@ -404,14 +432,12 @@ class EditCourse implements ActionListener {
 	}
 }
 
-
 //Create Class DeleteCourse for Performed Delete all Details
 class DeleteCourse implements ActionListener {
 	JLabel l1, l2;
 	JTextField t1;
 	JButton b6;
 
-	// Create Constructor
 	// Create Constructor
 	DeleteCourse() {
 		// Set Frame Dimension, Visibility & Layout
@@ -456,19 +482,9 @@ class DeleteCourse implements ActionListener {
 
 				pst.setInt(1, ID);
 				pst.executeUpdate();
-				
+
 				t1.setText("");
 				l2.setText("Data Deleted Succesfully.");
-				
-				/*
-				ResultSet rs = pst.executeUpdate();
-				if (rs.next()) {
-					t1.setText("");
-					l2.setText("Data Deleted Successfully.");
-				} else {
-					l2.setText("Course ID Doesn't Exits.");
-				}
-				*/
 			} catch (Exception e2) {
 				// If Exception Is Generated Than Handle by printStackTrace.
 				e2.printStackTrace();
@@ -476,7 +492,6 @@ class DeleteCourse implements ActionListener {
 		}
 	}
 }
-
 
 public class Assesement implements ActionListener {
 
